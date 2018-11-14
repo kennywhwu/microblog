@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import BlogForm from './BlogForm';
+import { connect } from 'react-redux';
+import {} from './action';
+import BlogForm from '../Components/BlogForm';
+import Comments from '../Components/Comments';
 
 class BlogPost extends Component {
   constructor(props) {
@@ -32,9 +35,13 @@ class BlogPost extends Component {
         ) : (
           <BlogForm />
         )}
+        <Comments comments={this.props.comments} />
       </div>
     );
   }
 }
 
-export default BlogPost;
+export default connect(
+  mapStateToProps,
+  {}
+)(BlogPost);

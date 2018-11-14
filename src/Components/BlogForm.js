@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import './AddBlogForm.css';
+// import './BlogForm.css';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-class AddBlogForm extends Component {
+class BlogForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,4 +73,4 @@ class AddBlogForm extends Component {
   }
 }
 
-export default AddBlogForm;
+export default BlogForm;
