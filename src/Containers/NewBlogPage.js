@@ -1,16 +1,16 @@
-// Page to display and handle blog form
+// Connected component for page that displays and handles blog form for adding blog
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addBlog } from '../actionCreators';
 import BlogForm from '../Components/BlogForm';
-// import uuid from 'uuid/v4';
 import slugify from 'slugify';
 
 class NewBlogPage extends Component {
   constructor(props) {
     super(props);
     this.addBlog = this.addBlog.bind(this);
+    this.cancelAdd = this.cancelAdd.bind(this);
   }
 
   // received from form
@@ -41,10 +41,18 @@ class NewBlogPage extends Component {
     this.props.history.push('/');
   }
 
+  cancelAdd() {
+    this.props.history.push(`/`);
+  }
+
   render() {
     return (
       <div className="NewBlogPage">
-        <BlogForm handleSubmit={this.addBlog} />
+        <BlogForm
+          handleSubmit={this.addBlog}
+          handleCancel={this.cancelAdd}
+          blog={{ title: '', description: '', body: '' }}
+        />
       </div>
     );
   }

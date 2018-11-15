@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import BlogList from '../Containers/BlogList';
-import BlogPost from '../Containers/BlogPost';
+import BlogList from '../Containers/BlogListPage';
+import BlogPostPage from '../Containers/BlogPostPage';
 import NewBlogPage from '../Containers/NewBlogPage';
 
 class Routes extends Component {
@@ -15,7 +15,7 @@ class Routes extends Component {
         <Route
           exact
           path="/:postId"
-          render={props => <BlogPost {...props} />}
+          render={props => <BlogPostPage {...props} />}
         />
         <Redirect to="/" />
       </Switch>

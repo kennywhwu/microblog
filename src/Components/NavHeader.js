@@ -1,3 +1,5 @@
+// NavHeader component for showing header and links
+
 import React, { Component } from 'react';
 // import './NavHeader.css';
 import { Jumbotron } from 'reactstrap';

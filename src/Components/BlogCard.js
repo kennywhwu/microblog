@@ -1,3 +1,5 @@
+// Component for showing summary of each individual blog
+
 import React, { Component } from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';

@@ -1,3 +1,5 @@
+// Reducer for defining manipulations on Redux store based on dispatch action types
+
 import {
   ADD_BLOG,
   DELETE_BLOG,
@@ -29,7 +31,7 @@ const INITIAL_STATE = { blogs: {} };
 
 function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    // Add blog to store
+    // Add blog to store with payload
     case ADD_BLOG:
       return {
         ...state,
@@ -45,7 +47,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       delete deleteBlogs[action.id];
       return { ...state, blogs: deleteBlogs };
 
-    // Update identified blog in store
+    // Update identified blog in store with new payload
     case EDIT_BLOG:
       let editBlogs = { ...state.blogs };
       editBlogs[action.payload.id] = action.payload;
@@ -53,6 +55,12 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     // Add comment to specific blog post in store
     case ADD_COMMENT:
+      // let addComment = action.payload.text;
+      // let addCommentState = { ...state };
+      // addCommentState.blogs[action.payload.blog_id].comments[
+      //   action.payload.id
+      // ] = addComment;
+
       return {
         ...state,
         blogs: {
@@ -71,7 +79,16 @@ function rootReducer(state = INITIAL_STATE, action) {
     case DELETE_COMMENT:
       let deleteComments = { ...state.blogs[action.payload.blog_id].comments };
       delete deleteComments[action.payload.id];
-      return { ...state, blogs: { ...state.blogs, comments: deleteComments } };
+      return {
+        ...state,
+        blogs: {
+          ...state.blogs,
+          [action.payload.blog_id]: {
+            ...state.blogs[action.payload.blog_id],
+            comments: deleteComments
+          }
+        }
+      };
 
     // Update identified comment from specific blog post in store
     case EDIT_COMMENT:

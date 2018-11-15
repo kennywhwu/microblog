@@ -1,19 +1,17 @@
+// Component for form to add comment to specific blog post
+
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
-class Comments extends Component {
+class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ''
+      text: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  static defaultProps = {
-    comments: []
-  };
 
   // Handle change to user input boxes
   handleChange(evt) {
@@ -25,29 +23,24 @@ class Comments extends Component {
   // Handle submission of form
   handleSubmit(evt) {
     evt.preventDefault();
+    // ADD VALIDATION AND ALERT
     this.props.handleSubmit(this.state);
+    this.setState({ text: '' });
   }
 
   render() {
     return (
-      <div className="Comments">
-        <h1>Comments</h1>
-        {this.props.comments.map(comment => (
-          <div>
-            <button>X</button>
-            <p>{comment.text}</p>
-          </div>
-        ))}
-
+      <div className="CommentForm">
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Input
               className="form-control"
               type="text"
-              name="comment"
-              id="comment"
+              name="text"
+              id="text"
               onChange={this.handleChange}
               placeholder="New Comment"
+              value={this.state.text}
             />
           </FormGroup>
           <Button color="primary">Add</Button>
@@ -57,4 +50,4 @@ class Comments extends Component {
   }
 }
 
-export default Comments;
+export default CommentForm;

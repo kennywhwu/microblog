@@ -1,3 +1,5 @@
+// Action creators to define types and payloads to return to the root reducer
+
 import {
   ADD_BLOG,
   DELETE_BLOG,
@@ -37,10 +39,11 @@ export function addComment(comment) {
   };
 }
 
-export function deleteComment(id) {
+export function deleteComment(comment) {
+  console.log('deleteComment comment', comment);
   return {
     type: DELETE_COMMENT,
-    id
+    payload: comment
   };
 }
 

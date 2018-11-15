@@ -1,15 +1,16 @@
+// Component for adding and editing blog post
+
 import React, { Component } from 'react';
 // import './BlogForm.css';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class BlogForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      description: '',
-      body: ''
+      title: this.props.blog.title,
+      description: this.props.blog.description,
+      body: this.props.blog.body
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,6 +41,7 @@ class BlogForm extends Component {
             id="title"
             onChange={this.handleChange}
             placeholder="Title"
+            value={this.state.title}
           />
         </FormGroup>
         <FormGroup>
@@ -51,6 +53,7 @@ class BlogForm extends Component {
             id="description"
             onChange={this.handleChange}
             placeholder="Description"
+            value={this.state.description}
           />
         </FormGroup>
         <FormGroup>
@@ -62,12 +65,12 @@ class BlogForm extends Component {
             id="body"
             onChange={this.handleChange}
             placeholder="Body"
+            value={this.state.body}
           />
         </FormGroup>
-        <Button color="primary">Save</Button>
-        <Link to="/">
-          <Button>Cancel</Button>
-        </Link>
+
+        <Button color="primary mx-2">Save</Button>
+        <Button onClick={this.props.handleCancel}>Cancel</Button>
       </Form>
     );
   }

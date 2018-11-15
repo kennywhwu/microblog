@@ -6,7 +6,7 @@ import PageContainer from './PageContainer';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <NavHeader />
         <PageContainer />
       </div>
