@@ -2,9 +2,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addBlog } from '../actionCreators';
 import BlogForm from '../Components/BlogForm';
-import slugify from 'slugify';
+import { addBlogPostToAPI } from '../actionCreators';
 
 class NewBlogPage extends Component {
   constructor(props) {
@@ -13,31 +12,8 @@ class NewBlogPage extends Component {
     this.cancelAdd = this.cancelAdd.bind(this);
   }
 
-  // received from form
-  // {
-  //   title: '',
-  //   description: '',
-  //   body: ''
-  // };
-
-  // send to Redux
-  // {
-  //       id: 1,
-  //       title: 'Blog 1 Title',
-  //       description: 'Blog 1 desc',
-  //       body: 'Blog 1 body',
-  //       comments: {
-  //         1: { text: 'Blog 1 comment 1' },
-  //         2: { text: 'Blog 1 comment 2' }
-  //       }
-  //     }
-
-  addBlog(blog) {
-    this.props.addBlog({
-      ...blog,
-      id: slugify(blog.title, { lower: true }),
-      comments: {}
-    });
+  async addBlog(blog) {
+    await this.props.addBlogPostToAPI(blog);
     this.props.history.push('/');
   }
 
@@ -60,5 +36,5 @@ class NewBlogPage extends Component {
 
 export default connect(
   null,
-  { addBlog }
+  { addBlogPostToAPI }
 )(NewBlogPage);

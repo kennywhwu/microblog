@@ -37,7 +37,7 @@ class CommentForm extends Component {
               className="form-control"
               type="text"
               name="text"
-              id="text"
+              id="commentform-text"
               onChange={this.handleChange}
               placeholder="New Comment"
               value={this.state.text}

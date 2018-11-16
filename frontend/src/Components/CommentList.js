@@ -10,11 +10,11 @@ class CommentList extends Component {
   };
 
   render() {
-    let comments = Object.keys(this.props.comments).map(key => (
+    let comments = this.props.comments.map(comment => (
       <Comment
-        comment={this.props.comments[key]}
-        id={key}
-        key={key}
+        comment={comment.text}
+        id={comment.id}
+        key={comment.id}
         handleDelete={this.props.handleDelete}
       />
     ));

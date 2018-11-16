@@ -3,15 +3,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  editBlog,
   deleteBlog,
-  addComment,
+  // addComment,
   deleteComment
 } from '../actionCreators';
-import uuid from 'uuid/v4';
 import BlogPost from '../Components/BlogPost';
 import BlogForm from '../Components/BlogForm';
 import CommentContainer from '../Components/CommentContainer';
+import { getBlogPostFromAPI, editBlogPostToAPI } from '../actionCreators';
 
 class BlogPostPage extends Component {
   constructor(props) {
@@ -25,32 +24,41 @@ class BlogPostPage extends Component {
     this.deleteComment = this.deleteComment.bind(this);
   }
 
+  async componentDidMount() {
+    await this.props.getBlogPostFromAPI(this.props.match.params.postId);
+  }
+
+  // Set state to switch from rendering blog post details to blog form
   switchEditing() {
     this.setState({ isEditing: true });
   }
 
+  // Delete blog from Redux store and redirect to BlogListPage
   deleteBlog() {
     this.props.deleteBlog(this.props.blog.id);
     this.props.history.push('/');
   }
 
-  editBlog(blog) {
+  // Edit blog in Redux store with updated fields
+  async editBlog(blog) {
     blog.id = this.props.blog.id;
     blog.comments = this.props.blog.comments;
-    this.props.editBlog(blog);
+    await this.props.editBlogPostToAPI(blog);
     this.setState({ isEditing: false });
   }
 
+  // Set state to switch back from form to details
   cancelEdit() {
     this.setState({ isEditing: false });
   }
 
+  // Add comment in Redux store for specific blog post
   addComment(comment) {
-    comment.id = uuid();
     comment.blog_id = this.props.blog.id;
     this.props.addComment(comment);
   }
 
+  // Delete comment in Redux store for specific blog post
   deleteComment(id) {
     let comment = { id, blog_id: this.props.blog.id };
     this.props.deleteComment(comment);
@@ -86,11 +94,17 @@ class BlogPostPage extends Component {
 // Retrieve only the specific blog identified by params from Redux store
 function mapStateToProps(reduxState, ownProps) {
   return {
-    blog: reduxState.blogs[ownProps.match.params.postId]
+    blog: reduxState.blogPost
   };
 }
 
 export default connect(
   mapStateToProps,
-  { editBlog, deleteBlog, addComment, deleteComment }
+  {
+    deleteBlog,
+    // addComment,
+    deleteComment,
+    getBlogPostFromAPI,
+    editBlogPostToAPI
+  }
 )(BlogPostPage);

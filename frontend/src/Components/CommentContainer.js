@@ -1,6 +1,7 @@
 // Component to render CommentList and CommentForm components
 
 import React, { Component } from 'react';
+// import from
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 

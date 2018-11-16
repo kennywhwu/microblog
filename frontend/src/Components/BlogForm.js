@@ -33,36 +33,36 @@ class BlogForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormGroup>
-          <Label for="title">Title</Label>
+          <Label htmlFor="blogform-title">Title</Label>
           <Input
             className="form-control"
             type="text"
             name="title"
-            id="title"
+            id="blogform-title"
             onChange={this.handleChange}
             placeholder="Title"
             value={this.state.title}
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="blogform-description">Description</Label>
           <Input
             className="form-control"
             type="text"
             name="description"
-            id="description"
+            id="blogform-description"
             onChange={this.handleChange}
             placeholder="Description"
             value={this.state.description}
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="body">Body</Label>
+          <Label htmlFor="blogform-body">Body</Label>
           <Input
             className="form-control"
             type="textarea"
             name="body"
-            id="body"
+            id="blogform-body"
             onChange={this.handleChange}
             placeholder="Body"
             value={this.state.body}

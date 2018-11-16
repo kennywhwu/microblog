@@ -1,45 +1,48 @@
 // Reducer for defining manipulations on Redux store based on dispatch action types
 
 import {
-  ADD_BLOG,
   DELETE_BLOG,
-  EDIT_BLOG,
   ADD_COMMENT,
   DELETE_COMMENT,
-  EDIT_COMMENT
-} from './actionTypes';
+  EDIT_COMMENT,
+  LOAD_BLOGTITLES,
+  ADD_BLOGPOST,
+  EDIT_BLOGPOST
+} from '../actionTypes';
 
-const INITIAL_STATE = { blogs: {} };
-
-// example state:
-// {
-//   blogs: {
-//     1: {
-//       id: 1,
-//       title: 'Blog 1 Title',
-//       description: 'Blog 1 desc',
-//       body: 'Blog 1 body',
-//       comments: {
-//         1: { text: 'Blog 1 comment 1' },
-//         2: { text: 'Blog 1 comment 2' }
-//       }
-//     }
-//   }
-// };
-
-// example comment object: { id: 1, text: 'comment', blog_id: 1 };
+const INITIAL_STATE = [];
 
 function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    // Save list of blog summaries in Redux store
+    case LOAD_BLOGTITLES:
+      return [...action.blogTitles];
+
     // Add blog to store with payload
-    case ADD_BLOG:
-      return {
+    case ADD_BLOGPOST:
+      return [
         ...state,
-        blogs: {
-          ...state.blogs,
-          [action.payload.id]: action.payload
+        {
+          id: action.blogPost.id,
+          title: action.blogPost.title,
+          description: action.blogPost.description
         }
-      };
+      ];
+
+    // Update identified blog in store with new payload
+    case EDIT_BLOGPOST:
+      let editBlogs = state.map(e => {
+        if (e.id === action.blogPost.id) {
+          return {
+            id: action.blogPost.id,
+            title: action.blogPost.title,
+            description: action.blogPost.description
+          };
+        } else {
+          return e;
+        }
+      });
+      return editBlogs;
 
     // Remove blog from store
     case DELETE_BLOG:
@@ -47,20 +50,8 @@ function rootReducer(state = INITIAL_STATE, action) {
       delete deleteBlogs[action.id];
       return { ...state, blogs: deleteBlogs };
 
-    // Update identified blog in store with new payload
-    case EDIT_BLOG:
-      let editBlogs = { ...state.blogs };
-      editBlogs[action.payload.id] = action.payload;
-      return { ...state, blogs: editBlogs };
-
     // Add comment to specific blog post in store
     case ADD_COMMENT:
-      // let addComment = action.payload.text;
-      // let addCommentState = { ...state };
-      // addCommentState.blogs[action.payload.blog_id].comments[
-      //   action.payload.id
-      // ] = addComment;
-
       return {
         ...state,
         blogs: {
@@ -91,10 +82,10 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
 
     // Update identified comment from specific blog post in store
-    case EDIT_COMMENT:
-      let editComments = { ...state.blogs[action.payload.blog_id].comments };
-      editComments[action.payload.id] = action.payload.text;
-      return { ...state, comments: editComments };
+    // case EDIT_COMMENT:
+    //   let editComments = { ...state.blogs[action.payload.blog_id].comments };
+    //   editComments[action.payload.id] = action.payload.text;
+    //   return { ...state, comments: editComments };
 
     default:
       return state;
