@@ -7,10 +7,19 @@ import {
   CardTitle,
   CardBody,
   CardText,
-  CardSubtitle
+  CardSubtitle,
 } from 'reactstrap';
 
 class BlogPost extends Component {
+  constructor(props) {
+    super(props);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete() {
+    this.props.handleDelete(this.props.blog.id);
+  }
+
   render() {
     return (
       <div className="BlogPost">
@@ -24,7 +33,7 @@ class BlogPost extends Component {
         <Button color="primary mx-2" onClick={this.props.handleEdit}>
           Edit
         </Button>
-        <Button color="danger" onClick={this.props.handleDelete}>
+        <Button color="danger" onClick={this.handleDelete}>
           Delete
         </Button>
       </div>

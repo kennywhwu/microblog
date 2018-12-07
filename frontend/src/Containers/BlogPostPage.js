@@ -2,15 +2,16 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  deleteBlog,
-  // addComment,
-  deleteComment
-} from '../actionCreators';
 import BlogPost from '../Components/BlogPost';
 import BlogForm from '../Components/BlogForm';
 import CommentContainer from '../Components/CommentContainer';
-import { getBlogPostFromAPI, editBlogPostToAPI } from '../actionCreators';
+import {
+  getBlogPostFromAPI,
+  editBlogPostToAPI,
+  deleteBlogPostToAPI,
+  addCommentToAPI,
+  deleteCommentToAPI,
+} from '../actionCreators';
 
 class BlogPostPage extends Component {
   constructor(props) {
@@ -33,12 +34,6 @@ class BlogPostPage extends Component {
     this.setState({ isEditing: true });
   }
 
-  // Delete blog from Redux store and redirect to BlogListPage
-  deleteBlog() {
-    this.props.deleteBlog(this.props.blog.id);
-    this.props.history.push('/');
-  }
-
   // Edit blog in Redux store with updated fields
   async editBlog(blog) {
     blog.id = this.props.blog.id;
@@ -47,27 +42,36 @@ class BlogPostPage extends Component {
     this.setState({ isEditing: false });
   }
 
+  // Delete blog in Redux store
+  async deleteBlog(postId) {
+    await this.props.deleteBlogPostToAPI(postId);
+    this.props.history.push('/');
+  }
+
   // Set state to switch back from form to details
   cancelEdit() {
     this.setState({ isEditing: false });
   }
 
   // Add comment in Redux store for specific blog post
-  addComment(comment) {
+  async addComment(comment) {
     comment.blog_id = this.props.blog.id;
-    this.props.addComment(comment);
+    await this.props.addCommentToAPI(comment);
   }
 
   // Delete comment in Redux store for specific blog post
-  deleteComment(id) {
+  async deleteComment(id) {
     let comment = { id, blog_id: this.props.blog.id };
-    this.props.deleteComment(comment);
+    await this.props.deleteCommentToAPI(comment);
   }
 
   render() {
     // If editing blog, render BlogForm component; otherwise render BlogPost component
     return (
       <div className="BlogPostPage">
+        <div>
+          <i style={{ color: 'red' }}>{this.state.errorMessage}</i>
+        </div>
         {!this.state.isEditing ? (
           <BlogPost
             handleEdit={this.switchEditing}
@@ -94,17 +98,18 @@ class BlogPostPage extends Component {
 // Retrieve only the specific blog identified by params from Redux store
 function mapStateToProps(reduxState, ownProps) {
   return {
-    blog: reduxState.blogPost
+    blog: reduxState.blogPost,
+    error: reduxState.error,
   };
 }
 
 export default connect(
   mapStateToProps,
   {
-    deleteBlog,
-    // addComment,
-    deleteComment,
     getBlogPostFromAPI,
-    editBlogPostToAPI
+    editBlogPostToAPI,
+    deleteBlogPostToAPI,
+    addCommentToAPI,
+    deleteCommentToAPI,
   }
 )(BlogPostPage);

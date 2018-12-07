@@ -10,7 +10,7 @@ class BlogForm extends Component {
     this.state = {
       title: this.props.blog.title,
       description: this.props.blog.description,
-      body: this.props.blog.body
+      body: this.props.blog.body,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,7 +19,7 @@ class BlogForm extends Component {
   // Handle change to user input boxes
   handleChange(evt) {
     this.setState({
-      [evt.target.name]: evt.target.value
+      [evt.target.name]: evt.target.value,
     });
   }
 
@@ -69,7 +69,9 @@ class BlogForm extends Component {
           />
         </FormGroup>
 
-        <Button color="primary mx-2">Save</Button>
+        <Button color="primary" className="mx-2">
+          Save
+        </Button>
         <Button onClick={this.props.handleCancel}>Cancel</Button>
       </Form>
     );

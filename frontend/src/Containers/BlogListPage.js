@@ -16,6 +16,10 @@ class BlogListPage extends Component {
     return (
       <div className="BlogListPage">
         <p>Welcome to Microblog!</p>
+        <div>{this.props.isLoading}</div>
+        <div>
+          <i style={{ color: 'red' }}>{this.props.errorMessage}</i>
+        </div>
         <BlogList blogs={this.props.blogs} />
       </div>
     );
@@ -24,7 +28,9 @@ class BlogListPage extends Component {
 
 function mapStateToProps(reduxState) {
   return {
-    blogs: reduxState.blogTitles
+    blogs: reduxState.blogTitles,
+    error: reduxState.error,
+    loading: reduxState.loading,
   };
 }
 

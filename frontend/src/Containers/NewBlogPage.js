@@ -24,6 +24,11 @@ class NewBlogPage extends Component {
   render() {
     return (
       <div className="NewBlogPage">
+        {this.props.error && (
+          <div>
+            <i style={{ color: 'red' }}>{this.state.errorMessage}</i>
+          </div>
+        )}
         <BlogForm
           handleSubmit={this.addBlog}
           handleCancel={this.cancelAdd}
@@ -34,7 +39,14 @@ class NewBlogPage extends Component {
   }
 }
 
+// Retrieve error message if exists
+function mapStateToProps(reduxState, ownProps) {
+  return {
+    error: reduxState.error,
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { addBlogPostToAPI }
 )(NewBlogPage);
